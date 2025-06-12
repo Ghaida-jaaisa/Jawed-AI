@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobileapp/Pages/ForgotPasswordPage.dart';
 import 'package:mobileapp/Pages/HomePage.dart';
 import 'package:mobileapp/Pages/RegisterPage.dart';
 
@@ -121,7 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                   TextButton(
                     style: TextButton.styleFrom(foregroundColor: Colors.teal),
                     onPressed: () {
-                      // TODO: navigate to forgot-password page
+                      Navigator.pushReplacementNamed(
+                        context,
+                        ForgotPasswordPage.routeName,
+                      );
                     },
                     child: const Text('هل نسيت كلمة المرور؟'),
                   ),

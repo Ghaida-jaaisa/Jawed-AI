@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mobileapp/Pages/ForgotPasswordPage.dart';
+import 'package:mobileapp/Pages/ResetPasswordPage.dart';
 import 'package:mobileapp/generated/l10n.dart';
 import 'package:mobileapp/Pages/HomePage.dart';
 import 'package:mobileapp/Pages/LoginPage.dart';
@@ -26,6 +28,8 @@ class MyApp extends StatelessWidget {
         HomePage.routeName: (context) => HomePage(),
         LoginPage.routeName: (context) => LoginPage(),
         RegisterPage.routeName: (context) => RegisterPage(),
+        ForgotPasswordPage.routeName: (context) => ForgotPasswordPage(),
+        ResetPasswordPage.routeName: (_) => const ResetPasswordPage(),
       },
     );
   }
