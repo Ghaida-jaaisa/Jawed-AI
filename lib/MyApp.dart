@@ -21,11 +21,11 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Jawed Ai',
-      initialRoute: HomePage.routeName,
+      initialRoute: LoginPage.routeName,
       routes: {
-        HomePage.routeName: (context) => const HomePage(),
-        LoginPage.routeName: (context) => const LoginPage(),
-        RegisterPage.routeName: (context) => const RegisterPage(),
+        HomePage.routeName: (context) => HomePage(),
+        LoginPage.routeName: (context) => LoginPage(),
+        RegisterPage.routeName: (context) => RegisterPage(),
       },
     );
   }
