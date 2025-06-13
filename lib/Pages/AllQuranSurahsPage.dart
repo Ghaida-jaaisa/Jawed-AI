@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class AllQuranSurahs extends StatefulWidget {
-  const AllQuranSurahs({super.key});
+class AllQuranSurahsPage extends StatefulWidget {
+  const AllQuranSurahsPage({super.key});
   static const String routeName = '/allQuranSurahs';
 
   @override
-  State<AllQuranSurahs> createState() => _AllQuranSurahsState();
+  State<AllQuranSurahsPage> createState() => _AllQuranSurahsPageState();
 }
 
-class _AllQuranSurahsState extends State<AllQuranSurahs> {
+class _AllQuranSurahsPageState extends State<AllQuranSurahsPage> {
   static const int totalPages = 604;
   final PageController _pageController = PageController();
 

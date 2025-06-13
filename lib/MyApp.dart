@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mobileapp/Pages/ForgotPasswordPage.dart';
 import 'package:mobileapp/Pages/ResetPasswordPage.dart';
+import 'package:mobileapp/Pages/SurahDetailPage.dart';
+import 'package:mobileapp/Pages/SurahListPage.dart';
 import 'package:mobileapp/generated/l10n.dart';
 import 'package:mobileapp/Pages/HomePage.dart';
 import 'package:mobileapp/Pages/LoginPage.dart';
 import 'package:mobileapp/Pages/RegisterPage.dart';
-import 'package:mobileapp/Pages/AllQuranSurahs.dart';
+import 'package:mobileapp/Pages/AllQuranSurahsPage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,14 +26,16 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Jawed Ai',
-      initialRoute: AllQuranSurahs.routeName,
+      initialRoute: LoginPage.routeName,
       routes: {
         HomePage.routeName: (context) => HomePage(),
         LoginPage.routeName: (context) => LoginPage(),
         RegisterPage.routeName: (context) => RegisterPage(),
         ForgotPasswordPage.routeName: (context) => ForgotPasswordPage(),
         ResetPasswordPage.routeName: (_) => const ResetPasswordPage(),
-        AllQuranSurahs.routeName: (context) => const AllQuranSurahs(),
+        AllQuranSurahsPage.routeName: (context) => const AllQuranSurahsPage(),
+        SurahListPage.routeName: (_) => const SurahListPage(),
+        SurahDetailPage.routeName: (_) => const SurahDetailPage(),
       },
     );
   }
