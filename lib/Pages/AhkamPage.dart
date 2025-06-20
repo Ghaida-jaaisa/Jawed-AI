@@ -5,6 +5,10 @@ import 'idhhar_page.dart';
 import 'iqlab_page.dart';
 
 class Ahkampage extends StatelessWidget {
+  final TextStyle _titleStyle = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold
+  );
   final List<Map<String, dynamic>> ahkam = [
     {
       'title': 'الإدغام',
@@ -32,8 +36,10 @@ class Ahkampage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('أحكام النون الساكنة والتنوين'),
+        title: Text('أحكام النون الساكنة والتنوين',
+          style: _titleStyle,),
         backgroundColor: Color(0xFF2FBAC4),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(30),

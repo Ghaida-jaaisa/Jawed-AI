@@ -72,7 +72,7 @@ class _SurahListPageState extends State<SurahListPage> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('أهلاً بك ... ', style: TextStyle(color: Colors.white)),
+        title: const Text('أهلاً بك في تطبيق جوّد ... ', style: TextStyle(color: Colors.white)),
         backgroundColor: Color(0xFF2FBAC4),
         bottom: TabBar(
           controller: _tabController,

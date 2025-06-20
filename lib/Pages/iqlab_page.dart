@@ -114,7 +114,7 @@ class _IqlabQuizPageState extends State<IqlabQuizPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('اختبار الإقلاب'),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFF2FBAC4),
       ),
       body: Center(
         child: ElevatedButton(
@@ -148,10 +148,10 @@ class IqlabPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal[50],
+      // backgroundColor: Color(0xFF2FBAC4),
       appBar: AppBar(
         title: Text('حكم الإقلاب'),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFF2FBAC4),
         actions: [
           IconButton(
             icon: Icon(Icons.quiz),

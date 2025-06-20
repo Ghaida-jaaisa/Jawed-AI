@@ -107,7 +107,7 @@ class _IkhfaQuizPageState extends State<IkhfaQuizPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('اختبار الإخفاء'),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFF2FBAC4),
       ),
       body: Center(
         child: ElevatedButton(
@@ -141,10 +141,10 @@ class IkhfaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal[50],
+      // backgroundColor: Color(0xFF2FBAC4),
       appBar: AppBar(
         title: Text('حكم الإخفاء'),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFF2FBAC4),
         actions: [
           IconButton(
             icon: Icon(Icons.quiz),
