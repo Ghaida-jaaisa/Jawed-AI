@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobileapp/Pages/ResetPasswordPage.dart';
+import 'package:mobileapp/Pages/HomePage.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -123,6 +124,29 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             'إرسال رابط إعادة التعيين',
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              // Go to Home Page
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, HomePage.routeName);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal[700],
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    'الصفحة الرئيسية',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
                 ),
               ),
             ],
