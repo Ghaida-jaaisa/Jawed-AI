@@ -4,9 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:mobileapp/Pages/ForgotPasswordPage.dart';
 import 'package:mobileapp/Pages/HomePage.dart';
 import 'package:mobileapp/Pages/RegisterPage.dart';
+import 'package:mobileapp/Pages/SurahListPage.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
+
   static const String routeName = '/login';
 
   @override
@@ -41,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('تم تسجيل الدخول بنجاح!')));
-        Navigator.pushReplacementNamed(context, HomePage.routeName);
+        Navigator.pushReplacementNamed(context, SurahListPage.routeName);
       } else {
         ScaffoldMessenger.of(
           context,
