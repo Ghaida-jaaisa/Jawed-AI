@@ -1,55 +1,62 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 
 class Dua {
-  final String verse, surah, ayahNumber;
-  Dua({required this.verse, required this.surah, required this.ayahNumber});
-}
+  final String verse;
+  final String surah;
+  final String ayahNumber;
 
-Future<List<Dua>> fetchQuranicDuas(String keyword) async {
-  final url = 'https://api.alquran.cloud/v1/search/$keyword/all/quran-uthmani';
-  final resp = await http.get(Uri.parse(url));
-
-  if (resp.statusCode == 200) {
-    final data = jsonDecode(resp.body)['data']['matches'] as List;
-    return data.map((m) => Dua(
-      verse: m['text'],
-      surah: m['surah']['name'],
-      ayahNumber: m['numberInSurah'].toString(),
-    )).toList();
-  } else {
-    throw Exception('فشل بجلب الأدعية');
-  }
+  Dua({
+    required this.verse,
+    required this.surah,
+    required this.ayahNumber,
+  });
 }
 
 class QuranicDuaPage extends StatefulWidget {
-  @override
-  _QuranicDuaPageState createState() => _QuranicDuaPageState();
   static const String routeName = '/quranicDua';
 
+  @override
+  State<QuranicDuaPage> createState() => _QuranicDuaPageState();
 }
 
 class _QuranicDuaPageState extends State<QuranicDuaPage> {
   late Future<List<Dua>> _future;
 
-  @override
-  void initState() {
-    super.initState();
-    _future = fetchQuranicDuas('ربنا');
+  Future<List<Dua>> fetchQuranicDuas() async {
+    final String jsonString = await rootBundle.loadString('assets/duas.json');
+    print(jsonString);
+    final List<dynamic> jsonList = jsonDecode(jsonString);
+
+    return jsonList.map((item) {
+      return Dua(
+        verse: item['verse'],
+        surah: item['surah'],
+        ayahNumber: item['ayah'],
+      );
+    }).toList();
   }
 
   @override
-  Widget build(BuildContext ctx) {
+  void initState() {
+    super.initState();
+    _future = fetchQuranicDuas();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('أدعية من القرآن' ,
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold
-        ),),
-        backgroundColor: Color(0xFF2FBAC4),
+        title: const Text(
+          'أدعية من القرآن',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color(0xFF2FBAC4),
         centerTitle: true,
       ),
       body: FutureBuilder<List<Dua>>(
@@ -59,6 +66,8 @@ class _QuranicDuaPageState extends State<QuranicDuaPage> {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('حدث خطأ: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('لا توجد أدعية متاحة'));
           }
 
           final duas = snapshot.data!;
