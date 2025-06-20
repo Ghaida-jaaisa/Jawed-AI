@@ -42,7 +42,7 @@ class _AllQuranSurahsPageState extends State<AllQuranSurahsPage> {
           'صفحات القرآن',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.teal[700],
+        backgroundColor: Color(0xFF2FBAC4),
       ),
       body: PageView.builder(
         controller: _pageController,

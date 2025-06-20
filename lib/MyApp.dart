@@ -27,17 +27,17 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Jawed Ai',
-      initialRoute: QuranicDuaPage.routeName,
+      initialRoute: SurahListPage.routeName,
       routes: {
         HomePage.routeName: (context) => HomePage(),
         LoginPage.routeName: (context) => LoginPage(),
-        RegisterPage.routeName: (context) => RegisterPage(),
-        ForgotPasswordPage.routeName: (context) => ForgotPasswordPage(),
-        ResetPasswordPage.routeName: (_) => const ResetPasswordPage(),
-        AllQuranSurahsPage.routeName: (context) => const AllQuranSurahsPage(),
-        SurahListPage.routeName: (_) => const SurahListPage(),
+        RegisterPage.routeName: (context) => RegisterPage(), // test done
+        ForgotPasswordPage.routeName: (context) => ForgotPasswordPage(), // test done
+        ResetPasswordPage.routeName: (_) => const ResetPasswordPage(), // test done
+        AllQuranSurahsPage.routeName: (context) => const AllQuranSurahsPage(), // test done
+        SurahListPage.routeName: (_) => const SurahListPage(), // test done
         SurahDetailPage.routeName: (_) => const SurahDetailPage(),
-        QuranicDuaPage.routeName: (context) =>  QuranicDuaPage(),
+        QuranicDuaPage.routeName: (context) =>  QuranicDuaPage(), // test done
       },
     );
   }

@@ -33,7 +33,7 @@ class Ahkampage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('أحكام النون الساكنة والتنوين'),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFF2FBAC4),
       ),
       body: Padding(
         padding: const EdgeInsets.all(30),
