@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mobileapp/Pages/ForgotPasswordPage.dart';
+import 'package:mobileapp/Pages/GeminiChatPage.dart';
 import 'package:mobileapp/Pages/ResetPasswordPage.dart';
 import 'package:mobileapp/Pages/SurahDetailPage.dart';
 import 'package:mobileapp/Pages/SurahListPage.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Jawed Ai',
-      initialRoute: HomePage.routeName,
+      initialRoute: GeminiChatPage.routeName,
       routes: {
         HomePage.routeName: (context) => HomePage(),
         LoginPage.routeName: (context) => LoginPage(),
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         SurahListPage.routeName: (_) => const SurahListPage(), // test done
         SurahDetailPage.routeName: (_) => const SurahDetailPage(),
         QuranicDuaPage.routeName: (context) =>  QuranicDuaPage(), // test done
+        GeminiChatPage.routeName: (_) => const GeminiChatPage()
       },
     );
   }
