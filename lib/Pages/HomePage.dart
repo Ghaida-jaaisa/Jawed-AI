@@ -9,6 +9,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -22,22 +24,25 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              // 🔹 Logo
               ClipOval(
                 child: Image.asset(
                   'assets/images/logo.png',
-                  width: 200,
-                  height: 200,
+                  width: 250,
+                  height: 250,
                   fit: BoxFit.cover,
                 ),
               ),
 
+              // 🔹 Quran facts
               Column(
                 children: const [
-                  QuranFactCard(text: '📖 عدد سور القرآن: 114 سورة'),
-                  QuranFactCard(text: '🕌 أطول سورة: البقرة – 286 آية'),
-                  QuranFactCard(text: '🌟 أقصر سورة: الكوثر – 3 آيات'),
+                  QuranFactCard(text: '📖 عدد سور القرآن الكريم: 114 سورة'),
+                  QuranFactCard(text: '🧩 عدد الأجزاء: 30 جزءاً'),
+                  QuranFactCard(text: '📜 عدد الآيات: 6236 آية'),
                 ],
               ),
+
               // 🔹 Buttons
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -52,23 +57,25 @@ class HomePage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF2FBAC4),
                         ),
-                        child: const Text('تسجيل الدخول' , style: TextStyle(
-                          color: Colors.white
-                        ),),
+                        child: const Text(
+                          'تسجيل الدخول',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.white
+                          backgroundColor: Colors.white,
                         ),
                         onPressed: () {
                           Navigator.pushNamed(context, RegisterPage.routeName);
                         },
-                        child: const Text('إنشاء حساب', style: TextStyle(
-                          color: const Color (0xFF2FBAC4)
-                        ),),
+                        child: const Text(
+                          'إنشاء حساب',
+                          style: TextStyle(color: Color(0xFF2FBAC4)),
+                        ),
                       ),
                     ),
                   ],
@@ -89,26 +96,30 @@ class QuranFactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final horizontalPadding = 30.0;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
-      child: Card(
-        color: const Color(0xFFAEDDE5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        elevation: 2,
-        child: Opacity(
-          opacity: 0.8,
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: horizontalPadding),
+      child: SizedBox(
+        width: screenWidth - 2 * horizontalPadding,
+        child: Card(
+          color: const Color(0xFFAEDDE5),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          elevation: 2,
+          child: Opacity(
+            opacity: 0.9,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
             ),
           ),
         ),
       ),
     );
-
   }
 }
-//
