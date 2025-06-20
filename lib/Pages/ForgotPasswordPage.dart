@@ -22,7 +22,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     setState(() => _isLoading = true);
     final url = Uri.parse(
-      'http://mytshop.runasp.net/api/Account/ForgotPassword',
+      'https://mytshop.runasp.net/api/Account/ForgotPassword',
     );
     try {
       final res = await http.post(

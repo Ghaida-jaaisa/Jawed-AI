@@ -30,7 +30,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
-    final url = Uri.parse('http://mytshop.runasp.net/api/Account/SendCode');
+    final url = Uri.parse('https://mytshop.runasp.net/api/Account/SendCode');
     final payload = {
       'email': email,
       'code': code,

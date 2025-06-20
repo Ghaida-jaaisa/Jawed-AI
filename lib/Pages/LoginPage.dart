@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
 
     setState(() => _isLoading = true);
 
-    final url = Uri.parse('http://mytshop.runasp.net/api/Account/Login');
+    final url = Uri.parse('https://mytshop.runasp.net/api/Account/Login');
     try {
       final res = await http.post(
         url,

@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _fieldErrors.clear();
     setState(() => _isLoading = true);
 
-    final url = Uri.parse('http://mytshop.runasp.net/api/Account/register');
+    final url = Uri.parse('https://mytshop.runasp.net/api/Account/register');
     final payload = {
       'firstName': firstName,
       'lastName': lastName,
