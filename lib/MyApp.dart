@@ -11,6 +11,7 @@ import 'package:mobileapp/Pages/LoginPage.dart';
 import 'package:mobileapp/Pages/RegisterPage.dart';
 import 'package:mobileapp/Pages/AllQuranSurahsPage.dart';
 import 'package:mobileapp/Pages/QuranicDuaPage.dart';
+import 'package:mobileapp/Pages/InfoCardsPage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: Locale("ar"), // Locale("en") for English
+      locale: Locale("ar"),
+      // Locale("en") for English
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -28,18 +30,25 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Jawed Ai',
-      initialRoute: GeminiChatPage.routeName,
+      initialRoute: QuranInfoCardsPage.routeName,
       routes: {
         HomePage.routeName: (context) => HomePage(),
         LoginPage.routeName: (context) => LoginPage(),
-        RegisterPage.routeName: (context) => RegisterPage(), // test done
-        ForgotPasswordPage.routeName: (context) => ForgotPasswordPage(), // test done
-        ResetPasswordPage.routeName: (_) => const ResetPasswordPage(), // test done
-        AllQuranSurahsPage.routeName: (context) => const AllQuranSurahsPage(), // test done
-        SurahListPage.routeName: (_) => const SurahListPage(), // test done
+        RegisterPage.routeName: (context) => RegisterPage(),
+        // test done
+        ForgotPasswordPage.routeName: (context) => ForgotPasswordPage(),
+        // test done
+        ResetPasswordPage.routeName: (_) => const ResetPasswordPage(),
+        // test done
+        AllQuranSurahsPage.routeName: (context) => const AllQuranSurahsPage(),
+        // test done
+        SurahListPage.routeName: (_) => const SurahListPage(),
+        // test done
         SurahDetailPage.routeName: (_) => const SurahDetailPage(),
-        QuranicDuaPage.routeName: (context) =>  QuranicDuaPage(), // test done
-        GeminiChatPage.routeName: (_) => const GeminiChatPage()
+        QuranicDuaPage.routeName: (context) => QuranicDuaPage(),
+        // test done
+        GeminiChatPage.routeName: (_) => const GeminiChatPage(),
+        QuranInfoCardsPage.routeName: (_) => const QuranInfoCardsPage(),
       },
     );
   }
