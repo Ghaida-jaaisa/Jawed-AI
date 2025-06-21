@@ -12,6 +12,7 @@ import 'package:mobileapp/Pages/RegisterPage.dart';
 import 'package:mobileapp/Pages/AllQuranSurahsPage.dart';
 import 'package:mobileapp/Pages/QuranicDuaPage.dart';
 import 'package:mobileapp/Pages/InfoCardsPage.dart';
+import 'package:mobileapp/Pages/DuaaKhatmQuranPage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Jawed Ai',
-      initialRoute: QuranInfoCardsPage.routeName,
+      initialRoute: DuaaKhatmQuranPage.routeName,
       routes: {
         HomePage.routeName: (context) => HomePage(),
         LoginPage.routeName: (context) => LoginPage(),
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         // test done
         GeminiChatPage.routeName: (_) => const GeminiChatPage(),
         QuranInfoCardsPage.routeName: (_) => const QuranInfoCardsPage(),
+        DuaaKhatmQuranPage.routeName: (_) => const DuaaKhatmQuranPage(),
       },
     );
   }

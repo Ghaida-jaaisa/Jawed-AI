@@ -66,6 +66,7 @@ flutter:
     - assets/images/
     - assets/duas.json
     - assets/quran_facts.json
+    - assets/duaa_khatm_quran.json
   #    - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
