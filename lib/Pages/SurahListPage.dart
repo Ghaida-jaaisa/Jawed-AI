@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobileapp/Pages/InfoCardsPage.dart';
 import 'SurahDetailPage.dart';
 import 'AllQuranSurahsPage.dart';
 import 'QuranicDuaPage.dart';
@@ -27,7 +28,7 @@ class _SurahListPageState extends State<SurahListPage>
   void initState() {
     super.initState();
     _tabController = TabController(
-      length: 3,
+      length: 4g,
       vsync: this,
     ); // بدون "قائمة السور"
 
@@ -51,6 +52,13 @@ class _SurahListPageState extends State<SurahListPage>
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => Ahkampage()),
+          );
+          break;
+        case 3:
+          // Navigator.pushNamed(context, QuranInfoCardsPage.routeName);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => QuranInfoCardsPage()),
           );
           break;
       }
@@ -109,6 +117,7 @@ class _SurahListPageState extends State<SurahListPage>
             Tab(text: 'قراءة القرآن', icon: Icon(Icons.menu_book)),
             Tab(text: 'أدعية قرآنية', icon: Icon(Icons.favorite)),
             Tab(text: 'أحكام التجويد', icon: Icon(Icons.record_voice_over)),
+            Tab(text: 'معلومات قرآنية', icon: Icon(FontAwesomeIcons.lightbulb),)
           ],
           labelStyle: const TextStyle(fontSize: 14),
           indicatorColor: Colors.white,
