@@ -28,7 +28,7 @@ class _SurahListPageState extends State<SurahListPage>
   void initState() {
     super.initState();
     _tabController = TabController(
-      length: 4g,
+      length: 4,
       vsync: this,
     ); // بدون "قائمة السور"
 
@@ -105,11 +105,26 @@ class _SurahListPageState extends State<SurahListPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'أهلاً بك في تطبيق جوّد ...',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Color(0xFF2FBAC4),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // Log out
+            },
+            icon: Transform.rotate(
+              angle: 3.1416,
+              child: Icon(
+                color: Colors.white,
+                FontAwesomeIcons.arrowRightFromBracket,
+              ),
+            ),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
@@ -117,7 +132,7 @@ class _SurahListPageState extends State<SurahListPage>
             Tab(text: 'قراءة القرآن', icon: Icon(Icons.menu_book)),
             Tab(text: 'أدعية قرآنية', icon: Icon(Icons.favorite)),
             Tab(text: 'أحكام التجويد', icon: Icon(Icons.record_voice_over)),
-            Tab(text: 'معلومات قرآنية', icon: Icon(FontAwesomeIcons.lightbulb),)
+            Tab(text: 'معلومات قرآنية', icon: Icon(FontAwesomeIcons.lightbulb)),
           ],
           labelStyle: const TextStyle(fontSize: 14),
           indicatorColor: Colors.white,
