@@ -41,7 +41,7 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('بطاقات معلومات قرآنية', style: _titleStyle),
+        title: Text('معلومات قرآنية', style: _titleStyle),
       ),
       body:
           _cards.isEmpty
@@ -51,10 +51,10 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
                 child: GridView.builder(
                   itemCount: _cards.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount: 3,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: 0.7,
+                    childAspectRatio: 1,
                   ),
                   itemBuilder: (context, index) {
                     final card = _cards[index];
