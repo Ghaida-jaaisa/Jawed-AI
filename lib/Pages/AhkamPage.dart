@@ -38,8 +38,8 @@ class Ahkampage extends StatelessWidget {
       appBar: AppBar(
         title: Text('أحكام النون الساكنة والتنوين',
           style: _titleStyle,),
-        backgroundColor: Color(0xFF2FBAC4),
         centerTitle: true,
+        backgroundColor: Color(0xFF2FBAC4),
       ),
       body: Padding(
         padding: const EdgeInsets.all(30),

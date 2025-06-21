@@ -27,7 +27,7 @@ class _QuranicDuaPageState extends State<QuranicDuaPage> {
 
   Future<List<Dua>> fetchQuranicDuas() async {
     final String jsonString = await rootBundle.loadString('assets/duas.json');
-    print(jsonString);
+    // print(jsonString);
     final List<dynamic> jsonList = jsonDecode(jsonString);
 
     return jsonList.map((item) {
