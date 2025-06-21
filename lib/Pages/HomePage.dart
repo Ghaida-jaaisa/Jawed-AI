@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobileapp/Pages/LoginPage.dart';
 import 'package:mobileapp/Pages/RegisterPage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // If we decide to change icon using FontAwesomeIcons
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -24,7 +25,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // 🔹 Logo
+              // Logo
               ClipOval(
                 child: Image.asset(
                   'assets/images/logo.png',
@@ -34,7 +35,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
 
-              // 🔹 Quran facts
+              //  Quran facts
               Column(
                 children: const [
                   QuranFactCard(text: '📖 عدد سور القرآن الكريم: 114 سورة'),
@@ -42,8 +43,7 @@ class HomePage extends StatelessWidget {
                   QuranFactCard(text: '📜 عدد الآيات: 6236 آية'),
                 ],
               ),
-
-              // 🔹 Buttons
+              //  Buttons
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Row(
@@ -91,7 +91,6 @@ class HomePage extends StatelessWidget {
 
 class QuranFactCard extends StatelessWidget {
   final String text;
-
   const QuranFactCard({super.key, required this.text});
 
   @override

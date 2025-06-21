@@ -13,6 +13,7 @@ import 'package:mobileapp/Pages/AllQuranSurahsPage.dart';
 import 'package:mobileapp/Pages/QuranicDuaPage.dart';
 import 'package:mobileapp/Pages/InfoCardsPage.dart';
 import 'package:mobileapp/Pages/DuaaKhatmQuranPage.dart';
+import 'package:mobileapp/Pages/SajdaAyahsPage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -31,26 +32,21 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Jawed Ai',
-      initialRoute: DuaaKhatmQuranPage.routeName,
+      initialRoute: SajdaAyahsPage.routeName,
       routes: {
         HomePage.routeName: (context) => HomePage(),
         LoginPage.routeName: (context) => LoginPage(),
         RegisterPage.routeName: (context) => RegisterPage(),
-        // test done
         ForgotPasswordPage.routeName: (context) => ForgotPasswordPage(),
-        // test done
         ResetPasswordPage.routeName: (_) => const ResetPasswordPage(),
-        // test done
         AllQuranSurahsPage.routeName: (context) => const AllQuranSurahsPage(),
-        // test done
         SurahListPage.routeName: (_) => const SurahListPage(),
-        // test done
         SurahDetailPage.routeName: (_) => const SurahDetailPage(),
         QuranicDuaPage.routeName: (context) => QuranicDuaPage(),
-        // test done
         GeminiChatPage.routeName: (_) => const GeminiChatPage(),
         QuranInfoCardsPage.routeName: (_) => const QuranInfoCardsPage(),
         DuaaKhatmQuranPage.routeName: (_) => const DuaaKhatmQuranPage(),
+        SajdaAyahsPage.routeName: (_) => const SajdaAyahsPage()
       },
     );
   }
