@@ -14,11 +14,6 @@ class QuranInfoCardsPage extends StatefulWidget {
 
 class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
   List<Map<String, dynamic>> _cards = [];
-  final TextStyle _titleStyle = TextStyle(
-    // color: Colors.white,
-    color: Color(0xFF2FBAC4),
-    fontWeight: FontWeight.bold,
-  );
 
   @override
   void initState() {
@@ -41,7 +36,13 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('معلومات قرآنية', style: _titleStyle),
+        title: Text(
+          'معلومات قرآنية',
+          style: TextStyle(
+            color: Color(0xFF2FBAC4),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body:
           _cards.isEmpty
@@ -67,10 +68,10 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
                         ),
                         child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(12.0),
                             child: Text(
                               card['title'],
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,

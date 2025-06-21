@@ -8,11 +8,7 @@ class Dua {
   final String surah;
   final String ayahNumber;
 
-  Dua({
-    required this.verse,
-    required this.surah,
-    required this.ayahNumber,
-  });
+  Dua({required this.verse, required this.surah, required this.ayahNumber});
 }
 
 class QuranicDuaPage extends StatefulWidget {
@@ -27,7 +23,6 @@ class _QuranicDuaPageState extends State<QuranicDuaPage> {
 
   Future<List<Dua>> fetchQuranicDuas() async {
     final String jsonString = await rootBundle.loadString('assets/duas.json');
-    // print(jsonString);
     final List<dynamic> jsonList = jsonDecode(jsonString);
 
     return jsonList.map((item) {
@@ -49,25 +44,22 @@ class _QuranicDuaPageState extends State<QuranicDuaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'أدعية من القرآن',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFF2FBAC4),
+        backgroundColor: Color(0xFF2FBAC4),
         centerTitle: true,
       ),
       body: FutureBuilder<List<Dua>>(
         future: _future,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('حدث خطأ: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('لا توجد أدعية متاحة'));
+            return Center(child: Text('لا توجد أدعية متاحة'));
           }
 
           final duas = snapshot.data!;
@@ -76,7 +68,7 @@ class _QuranicDuaPageState extends State<QuranicDuaPage> {
             itemBuilder: (context, i) {
               final d = duas[i];
               return Card(
-                margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                margin: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -85,20 +77,20 @@ class _QuranicDuaPageState extends State<QuranicDuaPage> {
                   title: Text(
                     d.verse,
                     textAlign: TextAlign.right,
-                    style: const TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16),
                   ),
                   subtitle: Text(
                     '${d.surah} - آية ${d.ayahNumber}',
                     textAlign: TextAlign.right,
-                    style: const TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 12),
                   ),
                   trailing: IconButton(
-                    icon: const Icon(Icons.copy, color: Color(0xFF2FBAC4)),
+                    icon: Icon(Icons.copy, color: Color(0xFF2FBAC4)),
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: d.verse));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('تم نسخ الدعاء')),
-                      );
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('تم نسخ الدعاء')));
                     },
                   ),
                 ),

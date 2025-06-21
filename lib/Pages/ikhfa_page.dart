@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class IkhfaQuizPage extends StatefulWidget {
   @override
   _IkhfaQuizPageState createState() => _IkhfaQuizPageState();
@@ -78,27 +77,28 @@ class _IkhfaQuizPageState extends State<IkhfaQuizPage> {
 
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text('نتيجتك🎉'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                qIndex = 0;
-                score = 0;
-              });
-              Navigator.pop(context);
-              _showQuizDialog();
-            },
-            child: Text('إعادة'),
+      builder:
+          (_) => AlertDialog(
+            title: Text('نتيجتك🎉'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    qIndex = 0;
+                    score = 0;
+                  });
+                  Navigator.pop(context);
+                  _showQuizDialog();
+                },
+                child: Text('إعادة'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('إغلاق'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('إغلاق'),
-          ),
-        ],
-      ),
     );
   }
 
@@ -120,6 +120,8 @@ class _IkhfaQuizPageState extends State<IkhfaQuizPage> {
 }
 
 class IkhfaPage extends StatelessWidget {
+  static const String routeName = '/IkhfaPage';
+
   final List<String> examples = [
     'مِنْ فَوْقِ',
     'أَزْوَاجًا ثَلاثَةً',
@@ -180,14 +182,13 @@ class IkhfaPage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.right,
             ),
-            ...examples.map((example) => Card(
-              child: ListTile(
-                title: Text(
-                  example,
-                  textAlign: TextAlign.right,
+            ...examples.map(
+              (example) => Card(
+                child: ListTile(
+                  title: Text(example, textAlign: TextAlign.right),
                 ),
               ),
-            )),
+            ),
             SizedBox(height: 30),
             Center(
               child: TextButton.icon(
@@ -198,7 +199,7 @@ class IkhfaPage extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: Colors.teal),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

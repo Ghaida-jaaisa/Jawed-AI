@@ -16,7 +16,7 @@ class _IdhharQuizPageState extends State<IdhharQuizPage> {
       'options': [
         'إخراج الحرف من مخرجه من غير غنة',
         'تحويل النون الساكنة إلى ميم',
-        'الإدغام مع الغنة'
+        'الإدغام مع الغنة',
       ],
       'correctIndex': 0,
     },
@@ -81,27 +81,28 @@ class _IdhharQuizPageState extends State<IdhharQuizPage> {
 
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text('نتيجتك🎉'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                qIndex = 0;
-                score = 0;
-              });
-              Navigator.pop(context);
-              _showQuizDialog();
-            },
-            child: Text('إعادة'),
+      builder:
+          (_) => AlertDialog(
+            title: Text('نتيجتك🎉'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    qIndex = 0;
+                    score = 0;
+                  });
+                  Navigator.pop(context);
+                  _showQuizDialog();
+                },
+                child: Text('إعادة'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('إغلاق'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('إغلاق'),
-          ),
-        ],
-      ),
     );
   }
 
@@ -123,6 +124,8 @@ class _IdhharQuizPageState extends State<IdhharQuizPage> {
 }
 
 class IdhharPage extends StatelessWidget {
+  static const String routeName = '/IdhharPage';
+
   final List<String> examples = [
     'من آمن',
     'أنعمت',
@@ -183,14 +186,13 @@ class IdhharPage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.right,
             ),
-            ...examples.map((example) => Card(
-              child: ListTile(
-                title: Text(
-                  example,
-                  textAlign: TextAlign.right,
+            ...examples.map(
+              (example) => Card(
+                child: ListTile(
+                  title: Text(example, textAlign: TextAlign.right),
                 ),
               ),
-            )),
+            ),
             SizedBox(height: 30),
             Center(
               child: TextButton.icon(
@@ -201,11 +203,10 @@ class IdhharPage extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: Colors.teal),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 }
-

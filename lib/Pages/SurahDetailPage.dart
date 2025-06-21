@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 import 'SurahListPage.dart';
 
 class SurahDetailPage extends StatefulWidget {
-  const SurahDetailPage({super.key});
-  static const String routeName = '/surah-detail';
+  SurahDetailPage({super.key});
+  static String routeName = '/surah-detail';
 
   @override
   State<SurahDetailPage> createState() => _SurahDetailPageState();
@@ -37,7 +37,7 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -50,22 +50,22 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
         future: _versesFuture,
         builder: (ctx, snap) {
           if (snap.connectionState != ConnectionState.done) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
           if (snap.hasError) {
             return Center(child: Text('خطأ: ${snap.error}'));
           }
           final verses = snap.data!;
           return ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
             itemCount: verses.length,
             itemBuilder: (c, i) {
               final v = verses[i];
               return Padding(
-                padding: const EdgeInsets.only(bottom: 16),
+                padding: EdgeInsets.only(bottom: 16),
                 child: Text(
                   '${v.text}  ﴿${v.numberInSurah}﴾',
-                  style: const TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 24),
                   textAlign: TextAlign.right,
                 ),
               );

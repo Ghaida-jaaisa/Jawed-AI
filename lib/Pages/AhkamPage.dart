@@ -5,30 +5,29 @@ import 'idhhar_page.dart';
 import 'iqlab_page.dart';
 
 class Ahkampage extends StatelessWidget {
-  final TextStyle _titleStyle = TextStyle(
-      color: Colors.white,
-      fontWeight: FontWeight.bold
-  );
+  Ahkampage({super.key});
+  static const String routeName = '/Ahkampage';
+
   final List<Map<String, dynamic>> ahkam = [
     {
       'title': 'الإدغام',
       'image': 'assets/images/idgham.png',
-      'page': IdghamPage(),
+      'page': IdghamPage.routeName,
     },
     {
       'title': 'الإخفاء',
       'image': 'assets/images/ikhfa.png',
-      'page': IkhfaPage(),
+      'page': IkhfaPage.routeName,
     },
     {
       'title': 'الإظهار',
       'image': 'assets/images/idhar.png',
-      'page': IdhharPage(),
+      'page': IdhharPage.routeName,
     },
     {
       'title': 'الإقلاب',
       'image': 'assets/images/iqlab.png',
-      'page': IqlabPage(),
+      'page': IqlabPage.routeName,
     },
   ];
 
@@ -36,8 +35,10 @@ class Ahkampage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('أحكام النون الساكنة والتنوين',
-          style: _titleStyle,),
+        title: Text(
+          'أحكام النون الساكنة والتنوين',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: Color(0xFF2FBAC4),
       ),
@@ -52,57 +53,21 @@ class Ahkampage extends StatelessWidget {
           ),
           itemBuilder: (context, index) {
             final item = ahkam[index];
-            return MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => item['page']),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 6,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Stack(
-                      children: [
-                        Image.asset(
-                          item['image'],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                        // Positioned(
-                        //   bottom: 0,
-                        //   left: 0,
-                        //   right: 0,
-                        //   child: Container(
-                        //     color: Colors.black.withOpacity(0.6),
-                        //     padding: EdgeInsets.symmetric(vertical: 6),
-                        //     child: Center(
-                        //       child: Text(
-                        //         item['title'],
-                        //         style: TextStyle(
-                        //           color: Colors.white,
-                        //           fontSize: 16,
-                        //           fontWeight: FontWeight.bold,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
+            return GestureDetector(
+              onTap: () => Navigator.pushNamed(context, item['page']),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 6,
+                      offset: Offset(0, 3),
                     ),
+                  ],
+                  image: DecorationImage(
+                    image: AssetImage(item['image']),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

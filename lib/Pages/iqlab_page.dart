@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class IqlabQuizPage extends StatefulWidget {
   @override
   _IqlabQuizPageState createState() => _IqlabQuizPageState();
@@ -17,7 +16,7 @@ class _IqlabQuizPageState extends State<IqlabQuizPage> {
       'options': [
         'تحويل النون الساكنة إلى ميم إذا جاء بعدها الباء',
         'نطق النون الساكنة بصوت واضح',
-        'تحويل التنوين إلى ياء'
+        'تحويل التنوين إلى ياء',
       ],
       'correctIndex': 0,
     },
@@ -26,7 +25,8 @@ class _IqlabQuizPageState extends State<IqlabQuizPage> {
       'options': [
         'عند مجيء حرف الباء بعد النون الساكنة أو التنوين',
         'عند مجيء حرف الميم',
-        'عند مجيء حرف الراء'],
+        'عند مجيء حرف الراء',
+      ],
       'correctIndex': 0,
     },
     {
@@ -85,27 +85,28 @@ class _IqlabQuizPageState extends State<IqlabQuizPage> {
 
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text('نتيجتك🎉'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                qIndex = 0;
-                score = 0;
-              });
-              Navigator.pop(context);
-              _showQuizDialog();
-            },
-            child: Text('إعادة'),
+      builder:
+          (_) => AlertDialog(
+            title: Text('نتيجتك🎉'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    qIndex = 0;
+                    score = 0;
+                  });
+                  Navigator.pop(context);
+                  _showQuizDialog();
+                },
+                child: Text('إعادة'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('إغلاق'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('إغلاق'),
-          ),
-        ],
-      ),
     );
   }
 
@@ -127,6 +128,8 @@ class _IqlabQuizPageState extends State<IqlabQuizPage> {
 }
 
 class IqlabPage extends StatelessWidget {
+  static const String routeName = '/IqlabPage';
+
   final List<String> examples = [
     'أَنْبَتَكُمْ تُقرأ أَمْبَتَكُمْ',
     'مَنْ بَخِلَ تُقرأ مَمْ بَخِلَ',
@@ -187,14 +190,13 @@ class IqlabPage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.right,
             ),
-            ...examples.map((example) => Card(
-              child: ListTile(
-                title: Text(
-                  example,
-                  textAlign: TextAlign.right,
+            ...examples.map(
+              (example) => Card(
+                child: ListTile(
+                  title: Text(example, textAlign: TextAlign.right),
                 ),
               ),
-            )),
+            ),
             SizedBox(height: 30),
             Center(
               child: TextButton.icon(
@@ -205,7 +207,7 @@ class IqlabPage extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: Colors.teal),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class IdghamQuizPage extends StatefulWidget {
   @override
   _IdghamQuizPageState createState() => _IdghamQuizPageState();
@@ -78,27 +77,28 @@ class _IdghamQuizPageState extends State<IdghamQuizPage> {
 
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text('نتيجتك🎉'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                qIndex = 0;
-                score = 0;
-              });
-              Navigator.pop(context);
-              _showQuizDialog();
-            },
-            child: Text('إعادة'),
+      builder:
+          (_) => AlertDialog(
+            title: Text('نتيجتك🎉'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    qIndex = 0;
+                    score = 0;
+                  });
+                  Navigator.pop(context);
+                  _showQuizDialog();
+                },
+                child: Text('إعادة'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('إغلاق'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('إغلاق'),
-          ),
-        ],
-      ),
     );
   }
 
@@ -120,6 +120,8 @@ class _IdghamQuizPageState extends State<IdghamQuizPage> {
 }
 
 class IdghamPage extends StatelessWidget {
+  static const String routeName = '/IdghamPage';
+
   final List<String> examples = [
     'من يعمل (تُقرأ: مَـيـعـمـل)',
     'خيرًا يره (تُقرأ: خَيـرًا يـره)',
@@ -169,7 +171,7 @@ class IdghamPage extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Text(
                   '📖 الإدغام هو التقاء حرف ساكن بحرف متحرّك بحيث يصيران حرفًا واحدًا مشددًا. '
-                      'ويحدث عند نون ساكنة أو تنوين إذا جاء بعدها أحد حروف (يرملون)',
+                  'ويحدث عند نون ساكنة أو تنوين إذا جاء بعدها أحد حروف (يرملون)',
                   style: TextStyle(fontSize: 16),
                   textAlign: TextAlign.right,
                 ),
@@ -184,10 +186,7 @@ class IdghamPage extends StatelessWidget {
             ...examples.map((example) {
               return Card(
                 child: ListTile(
-                  title: Text(
-                    example,
-                    textAlign: TextAlign.right,
-                  ),
+                  title: Text(example, textAlign: TextAlign.right),
                 ),
               );
             }).toList(),
@@ -201,7 +200,7 @@ class IdghamPage extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: Colors.teal),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

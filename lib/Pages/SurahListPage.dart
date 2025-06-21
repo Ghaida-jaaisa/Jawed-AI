@@ -1,8 +1,10 @@
-// lib/Pages/SurahListPage.dart
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobileapp/Pages/InfoCardsPage.dart';
+import 'package:mobileapp/Pages/DuaaKhatmQuranPage.dart';
+import 'package:mobileapp/Pages/HomePage.dart';
+import 'package:mobileapp/Pages/QuranInfoCardsPage.dart';
+import 'package:mobileapp/Pages/SajdaAyahsPage.dart';
 import 'SurahDetailPage.dart';
 import 'AllQuranSurahsPage.dart';
 import 'QuranicDuaPage.dart';
@@ -18,54 +20,13 @@ class SurahListPage extends StatefulWidget {
   State<SurahListPage> createState() => _SurahListPageState();
 }
 
-class _SurahListPageState extends State<SurahListPage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _SurahListPageState extends State<SurahListPage> {
   int _selectedBottomIndex = 0;
   List<Surah> _allSurahs = [];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: 4,
-      vsync: this,
-    ); // بدون "قائمة السور"
-
-    _tabController.addListener(() {
-      if (_tabController.indexIsChanging) return;
-
-      switch (_tabController.index) {
-        case 0:
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const AllQuranSurahsPage()),
-          );
-          break;
-        case 1:
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => QuranicDuaPage()),
-          );
-          break;
-        case 2:
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => Ahkampage()),
-          );
-          break;
-        case 3:
-          // Navigator.pushNamed(context, QuranInfoCardsPage.routeName);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => QuranInfoCardsPage()),
-          );
-          break;
-      }
-
-      // _tabController.animateTo(0); // الرجوع لأول تبويب بعد التنقل
-    });
-
     _fetchSurahs();
   }
 
@@ -82,88 +43,15 @@ class _SurahListPageState extends State<SurahListPage>
     }
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   List<Widget> get _bottomScreens => [
     _buildSurahList(_allSurahs),
-    // قائمة السور
     _buildSurahList(
       _allSurahs.where((s) => s.revelationType == "Meccan").toList(),
     ),
-    // مكية
     _buildSurahList(
       _allSurahs.where((s) => s.revelationType == "Medinan").toList(),
     ),
-    // مدنية
   ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text(
-          'أهلاً بك في تطبيق جوّد ...',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Color(0xFF2FBAC4),
-        actions: [
-          IconButton(
-            onPressed: () {
-              // Log out
-            },
-            icon: Transform.rotate(
-              angle: 3.1416,
-              child: Icon(
-                color: Colors.white,
-                FontAwesomeIcons.arrowRightFromBracket,
-              ),
-            ),
-          ),
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [
-            // Tab(icon: SizedBox.shrink()),
-            Tab(text: 'قراءة القرآن', icon: Icon(Icons.menu_book)),
-            Tab(text: 'أدعية قرآنية', icon: Icon(Icons.favorite)),
-            Tab(text: 'أحكام التجويد', icon: Icon(Icons.record_voice_over)),
-            Tab(text: 'معلومات قرآنية', icon: Icon(FontAwesomeIcons.lightbulb)),
-          ],
-          labelStyle: const TextStyle(fontSize: 14),
-          indicatorColor: Colors.white,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          labelPadding: const EdgeInsets.symmetric(vertical: 8),
-        ),
-      ),
-      body:
-          _allSurahs.isEmpty
-              ? const Center(child: CircularProgressIndicator())
-              : _bottomScreens[_selectedBottomIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedBottomIndex,
-        onTap: (index) => setState(() => _selectedBottomIndex = index),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'قائمة السور'),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.kaaba),
-            label: 'السور المكية',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.mosque),
-            label: 'السور المدنية',
-          ),
-        ],
-        selectedItemColor: Color(0xFF2FBAC4),
-        unselectedItemColor: Colors.grey,
-      ),
-    );
-  }
 
   Widget _buildSurahList(List<Surah> surahs) {
     return ListView.builder(
@@ -174,7 +62,7 @@ class _SurahListPageState extends State<SurahListPage>
           title: Text(
             '${s.number}. ${s.name}',
             textAlign: TextAlign.right,
-            style: const TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 18),
           ),
           subtitle: Text(
             '${s.englishName} • ${s.numberOfAyahs} آيات',
@@ -191,9 +79,109 @@ class _SurahListPageState extends State<SurahListPage>
       },
     );
   }
+
+  Widget _topNavButton({
+    required String label,
+    required IconData icon,
+    required String routeName,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 4.0),
+      child: ElevatedButton.icon(
+        icon: Icon(icon, size: 18),
+        label: Text(label, style: TextStyle(fontSize: 14)),
+        onPressed: () => Navigator.pushNamed(context, routeName),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xFF2FBAC4),
+          foregroundColor: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'أهلاً بك في تطبيق جوّد',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF2FBAC4),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, HomePage.routeName),
+            icon: Icon(color: Colors.white, Icons.logout, size: 30),
+          ),
+        ],
+      ),
+      body:
+          _allSurahs.isEmpty
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _topNavButton(
+                          label: 'قراءة القرآن',
+                          icon: Icons.menu_book,
+                          routeName: AllQuranSurahsPage.routeName,
+                        ),
+                        _topNavButton(
+                          label: 'أدعية قرآنية',
+                          icon: Icons.favorite,
+                          routeName: QuranicDuaPage.routeName,
+                        ),
+                        _topNavButton(
+                          label: 'أحكام التجويد',
+                          icon: Icons.record_voice_over,
+                          routeName: Ahkampage.routeName,
+                        ),
+                        _topNavButton(
+                          label: 'معلومات قرآنية',
+                          icon: FontAwesomeIcons.lightbulb,
+                          routeName: QuranInfoCardsPage.routeName,
+                        ),
+                        _topNavButton(
+                          label: 'ادعية ختم القران',
+                          icon: FontAwesomeIcons.lightbulb,
+                          routeName: DuaaKhatmQuranPage.routeName,
+                        ),
+                        _topNavButton(
+                          label: 'ايات السجدة',
+                          icon: FontAwesomeIcons.lightbulb,
+                          routeName: SajdaAyahsPage.routeName,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(child: _bottomScreens[_selectedBottomIndex]),
+                ],
+              ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedBottomIndex,
+        onTap: (index) => setState(() => _selectedBottomIndex = index),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'قائمة السور'),
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.kaaba),
+            label: 'السور المكية',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.mosque),
+            label: 'السور المدنية',
+          ),
+        ],
+        selectedItemColor: Color(0xFF2FBAC4),
+        unselectedItemColor: Colors.grey,
+      ),
+    );
+  }
 }
 
-/// نموذج بيانات السورة
 class Surah {
   final int number;
   final String name;
