@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
-import 'idgham_page.dart';
-import 'ikhfa_page.dart';
-import 'idhhar_page.dart';
-import 'iqlab_page.dart';
+import 'package:mobileapp/Pages/HukmPage.dart';
+// import 'idgham_page.dart';
+// import 'ikhfa_page.dart';
+// import 'idhhar_page.dart';
+// import 'iqlab_page.dart';
 
 class Ahkampage extends StatelessWidget {
   Ahkampage({super.key});
   static const String routeName = '/Ahkampage';
 
   final List<Map<String, dynamic>> ahkam = [
-    {
-      'title': 'الإدغام',
-      'image': 'assets/images/idgham.png',
-      'page': IdghamPage.routeName,
-    },
-    {
-      'title': 'الإخفاء',
-      'image': 'assets/images/ikhfa.png',
-      'page': IkhfaPage.routeName,
-    },
-    {
-      'title': 'الإظهار',
-      'image': 'assets/images/idhar.png',
-      'page': IdhharPage.routeName,
-    },
-    {
-      'title': 'الإقلاب',
-      'image': 'assets/images/iqlab.png',
-      'page': IqlabPage.routeName,
-    },
+    {'title': 'الإظهار', 'image': 'assets/images/idhar.png', 'hukmId': 0},
+    {'title': 'الإدغام', 'image': 'assets/images/idgham.png', 'hukmId': 1},
+    {'title': 'الإخفاء', 'image': 'assets/images/ikhfa.png', 'hukmId': 2},
+    {'title': 'الإقلاب', 'image': 'assets/images/iqlab.png', 'hukmId': 3},
   ];
 
   @override
@@ -54,7 +39,12 @@ class Ahkampage extends StatelessWidget {
           itemBuilder: (context, index) {
             final item = ahkam[index];
             return GestureDetector(
-              onTap: () => Navigator.pushNamed(context, item['page']),
+              onTap:
+                  () => Navigator.pushNamed(
+                    context,
+                    HukmPage.routeName,
+                    arguments: item['hukmId'],
+                  ),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
