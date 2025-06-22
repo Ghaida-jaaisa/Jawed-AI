@@ -1,149 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class IkhfaQuizPage extends StatefulWidget {
-  @override
-  _IkhfaQuizPageState createState() => _IkhfaQuizPageState();
-}
-
-class _IkhfaQuizPageState extends State<IkhfaQuizPage> {
-  int qIndex = 0;
-  int score = 0;
-
-  final List<Map<String, dynamic>> quiz = [
-    {
-      'question': 'هل الإخفاء هو نطق النون الساكنة بصوت خفيف؟',
-      'options': ['نعم', 'لا'],
-      'correctIndex': 0,
-    },
-    {
-      'question': 'كم عدد حروف الإخفاء؟',
-      'options': ['15', '10', '7'],
-      'correctIndex': 0,
-    },
-    {
-      'question': 'الإخفاء هو النطق بالنون الساكنة بصوت واضح مثل الإظهار.',
-      'options': ['صح', 'خطأ'],
-      'correctIndex': 1,
-    },
-  ];
-
-  void _showQuizDialog() {
-    if (qIndex >= quiz.length) {
-      _showResult();
-      return;
-    }
-
-    showDialog(
-      context: context,
-      builder: (_) {
-        final currentQ = quiz[qIndex];
-
-        return AlertDialog(
-          title: Text('سؤال ${qIndex + 1}'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(currentQ['question']),
-              SizedBox(height: 10),
-              ...List.generate(currentQ['options'].length, (i) {
-                return ListTile(
-                  title: Text(currentQ['options'][i]),
-                  onTap: () {
-                    if (i == currentQ['correctIndex']) score++;
-                    Navigator.pop(context);
-                    setState(() => qIndex++);
-                    _showQuizDialog();
-                  },
-                );
-              }),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _showResult() {
-    String message;
-
-    if (score == quiz.length) {
-      message = 'رائع! إجاباتك كلها صحيحة! 🌟';
-    } else if (score == 0) {
-      message = 'لا بأس، حاول مرة أخرى 💪';
-    } else {
-      message = 'أحسنت! نتيجتك: $score / ${quiz.length}';
-    }
-
-    showDialog(
-      context: context,
-      builder:
-          (_) => AlertDialog(
-            title: Text('نتيجتك🎉'),
-            content: Text(message),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    qIndex = 0;
-                    score = 0;
-                  });
-                  Navigator.pop(context);
-                  _showQuizDialog();
-                },
-                child: Text('إعادة'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text('إغلاق'),
-              ),
-            ],
-          ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('اختبار الإخفاء'),
-        backgroundColor: Color(0xFF2FBAC4),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('ابدأ الاختبار'),
-          onPressed: _showQuizDialog,
-        ),
-      ),
-    );
-  }
-}
-
-class IkhfaPage extends StatelessWidget {
+class IkhfaPage extends StatefulWidget {
   static const String routeName = '/IkhfaPage';
 
-  final List<String> examples = [
-    'مِنْ فَوْقِ',
-    'أَزْوَاجًا ثَلاثَةً',
-    'أنْعم',
-    'ريحًا صرصرًاً',
-  ];
+  @override
+  _IkhfaPageState createState() => _IkhfaPageState();
+}
 
-  final String videoUrl = 'https://youtu.be/RNXcTbJsWo4?si=fOQMTlTstNb4wKSQ';
+class _IkhfaPageState extends State<IkhfaPage> {
+  Map<String, dynamic>? ruleData;
+  bool isLoading = true;
 
-  Future<void> _openVideo() async {
-    final Uri url = Uri.parse(videoUrl);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
+  @override
+  void initState() {
+    super.initState();
+    fetchRuleData();
+  }
+
+  Future<void> fetchRuleData() async {
+    final response = await http.get(Uri.parse('http://jawedai.runasp.net/Home/GetRule/2'));
+    if (response.statusCode == 200) {
+      setState(() {
+        ruleData = json.decode(response.body);
+        isLoading = false;
+      });
+    } else {
+      throw Exception('فشل في تحميل البيانات');
+    }
+  }
+
+  Future<void> _openVideo(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       throw 'لا يمكن فتح الرابط';
     }
   }
 
+  void _startQuiz() {
+    if (ruleData == null) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => QuizPage(quiz: ruleData!["quiz"], title: 'اختبار الإخفاء'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color(0xFF2FBAC4),
       appBar: AppBar(
         title: Text('حكم الإخفاء'),
         backgroundColor: Color(0xFF2FBAC4),
@@ -151,26 +61,23 @@ class IkhfaPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.quiz),
             tooltip: 'اختبر نفسك',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => IkhfaQuizPage()),
-              );
-            },
+            onPressed: _startQuiz,
           ),
         ],
       ),
-      body: Padding(
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
             Card(
-              elevation: 3,
               color: Colors.white,
+              elevation: 3,
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  '📖 الإخفاء هو النطق بالنون الساكنة أو التنوين بصوتٍ خفيف بين الإظهار والإدغام، ويحدث عند مجيء أحد حروف الإخفاء (15 حرفًا)',
+                  '📖 ' + (ruleData!["definition"] ?? ""),
                   style: TextStyle(fontSize: 16),
                   textAlign: TextAlign.right,
                 ),
@@ -182,26 +89,132 @@ class IkhfaPage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.right,
             ),
-            ...examples.map(
-              (example) => Card(
+            ...List.generate(ruleData!["examples"].length, (index) {
+              return Card(
                 child: ListTile(
-                  title: Text(example, textAlign: TextAlign.right),
+                  title: Text(
+                    ruleData!["examples"][index],
+                    textAlign: TextAlign.right,
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
             SizedBox(height: 30),
             Center(
               child: TextButton.icon(
-                onPressed: _openVideo,
+                onPressed: () => _openVideo(ruleData!["videoUrl"]),
                 icon: Icon(Icons.video_library, color: Colors.teal),
                 label: Text(
-                  ' لمشاهدة شرح الإخفاء على يوتيوب، اضغطي هنا',
+                  ' لمشاهدة شرح الإخفاء على يوتيوب، اضغط هنا',
                   style: TextStyle(fontSize: 16, color: Colors.teal),
                 ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class QuizPage extends StatefulWidget {
+  final List<dynamic> quiz;
+  final String title;
+
+  QuizPage({required this.quiz, required this.title});
+
+  @override
+  _QuizPageState createState() => _QuizPageState();
+}
+
+class _QuizPageState extends State<QuizPage> {
+  int qIndex = 0;
+  int score = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showQuizDialog();
+    });
+  }
+
+  void _showQuizDialog() {
+    if (qIndex >= widget.quiz.length) {
+      _showResult();
+      return;
+    }
+
+    final currentQ = widget.quiz[qIndex];
+
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('سؤال ${qIndex + 1}'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(currentQ['question']),
+            SizedBox(height: 10),
+            ...List.generate(currentQ['options'].length, (i) {
+              return ListTile(
+                title: Text(currentQ['options'][i]),
+                onTap: () {
+                  if (i == currentQ['correctIndex']) score++;
+                  Navigator.pop(context);
+                  setState(() => qIndex++);
+                  _showQuizDialog();
+                },
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showResult() {
+    String message;
+    if (score == widget.quiz.length) {
+      message = 'رائع! إجاباتك كلها صحيحة! 🌟';
+    } else if (score == 0) {
+      message = 'لا بأس، حاول مرة أخرى 💪';
+    } else {
+      message = 'أحسنت! نتيجتك: $score / ${widget.quiz.length}';
+    }
+
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('نتيجتك🎉'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                qIndex = 0;
+                score = 0;
+              });
+              Navigator.pop(context);
+              _showQuizDialog();
+            },
+            child: Text('إعادة'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('إغلاق'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        backgroundColor: Color(0xFF2FBAC4),
       ),
     );
   }
