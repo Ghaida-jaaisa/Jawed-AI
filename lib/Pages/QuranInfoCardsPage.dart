@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:http/http.dart' as http;
 
 class QuranInfoCardsPage extends StatefulWidget {
   const QuranInfoCardsPage({super.key});
@@ -18,17 +18,29 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
   @override
   void initState() {
     super.initState();
-    loadJsonData();
+    fetchFactsFromApi();
   }
 
-  Future<void> loadJsonData() async {
-    final String jsonString = await rootBundle.loadString(
-      'assets/quran_facts.json',
-    );
-    final List<dynamic> jsonData = json.decode(jsonString);
-    setState(() {
-      _cards = List<Map<String, dynamic>>.from(jsonData);
-    });
+  Future<void> fetchFactsFromApi() async {
+    final Uri url = Uri.parse('http://jawedai.runasp.net/Home/GetFacts');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonData = json.decode(response.body);
+        // print(jsonData);
+        setState(() {
+          _cards = List<Map<String, dynamic>>.from(jsonData);
+        });
+      } else {
+        // Error from server
+        print('HTTP Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Network error or invalid JSON
+      print('Fetch error: $e');
+    }
   }
 
   @override
@@ -36,7 +48,7 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'معلومات قرآنية',
           style: TextStyle(
             color: Color(0xFF2FBAC4),
@@ -62,16 +74,16 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
                     return FlipCard(
                       direction: FlipDirection.HORIZONTAL,
                       front: Card(
-                        color: Color(0xFF2FBAC4),
+                        color: const Color(0xFF2FBAC4),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
                           child: Padding(
-                            padding: EdgeInsets.all(12.0),
+                            padding: const EdgeInsets.all(12.0),
                             child: Text(
-                              card['title'],
-                              style: TextStyle(
+                              card['title'] ?? '',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -91,7 +103,7 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
-                              card['content'],
+                              card['content'] ?? '',
                               style: const TextStyle(
                                 color: Color(0xFF2FBAC4),
                                 fontSize: 16,
