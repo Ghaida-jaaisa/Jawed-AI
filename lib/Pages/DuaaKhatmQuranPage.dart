@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class DuaaKhatmQuranPage extends StatelessWidget {
   const DuaaKhatmQuranPage({super.key});
@@ -8,12 +8,14 @@ class DuaaKhatmQuranPage extends StatelessWidget {
   static final String routeName = '/DuaaKhatmQuranPage';
 
   Future<String> loadDuaaText() async {
-    final String response = await rootBundle.loadString(
-      'assets/duaa_khatm_quran.json',
-    );
-    final data = json.decode(response);
-    final List<dynamic> duaaList = data['duaa'];
-    return duaaList.join('\n\n');
+    final response = await http.get(Uri.parse('http://jawedai.runasp.net/Home/GetDuaas'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> duaaList = json.decode(response.body);
+      return duaaList.join('\n\n');
+    } else {
+      throw Exception('فشل تحميل الدعاء من الخادم');
+    }
   }
 
   @override
@@ -22,7 +24,6 @@ class DuaaKhatmQuranPage extends StatelessWidget {
       backgroundColor: const Color(0xFFFAF9F6),
       appBar: AppBar(
         backgroundColor: const Color(0xFF2FBAC4),
-        systemOverlayStyle: SystemUiOverlayStyle.light,
         title: const Text(
           'دعاء ختم القرآن',
           style: TextStyle(
