@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 
 class Dua {
@@ -22,16 +22,21 @@ class _QuranicDuaPageState extends State<QuranicDuaPage> {
   late Future<List<Dua>> _future;
 
   Future<List<Dua>> fetchQuranicDuas() async {
-    final String jsonString = await rootBundle.loadString('assets/duas.json');
-    final List<dynamic> jsonList = jsonDecode(jsonString);
+    final response = await http.get(Uri.parse('http://jawedai.runasp.net/Home/GetQuranVerses'));
 
-    return jsonList.map((item) {
-      return Dua(
-        verse: item['verse'],
-        surah: item['surah'],
-        ayahNumber: item['ayah'],
-      );
-    }).toList();
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonList = jsonDecode(response.body);
+
+      return jsonList.map((item) {
+        return Dua(
+          verse: item['verse'] ?? '',
+          surah: item['surah'] ?? '',
+          ayahNumber: item['ayah']?.toString() ?? '',
+        );
+      }).toList();
+    } else {
+      throw Exception('فشل في جلب البيانات من الخادم');
+    }
   }
 
   @override
