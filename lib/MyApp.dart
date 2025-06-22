@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Jawed Ai',
-      initialRoute: DuaaKhatmQuranPage.routeName,
+      initialRoute: HomePage.routeName,
       routes: {
         HomePage.routeName: (context) => HomePage(),
         LoginPage.routeName: (context) => LoginPage(),
