@@ -13,15 +13,15 @@ class QuranInfoCardsPage extends StatefulWidget {
 }
 
 class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
-  List<Map<String, dynamic>> _cards = [];
+  late Future<List<Map<String, dynamic>>> _futureCards;
 
   @override
   void initState() {
     super.initState();
-    fetchFactsFromApi();
+    _futureCards = fetchFactsFromApi();
   }
 
-  Future<void> fetchFactsFromApi() async {
+  Future<List<Map<String, dynamic>>> fetchFactsFromApi() async {
     final Uri url = Uri.parse('http://jawedai.runasp.net/Home/GetFacts');
 
     try {
@@ -29,17 +29,12 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonData = json.decode(response.body);
-        // print(jsonData);
-        setState(() {
-          _cards = List<Map<String, dynamic>>.from(jsonData);
-        });
+        return List<Map<String, dynamic>>.from(jsonData);
       } else {
-        // Error from server
-        print('HTTP Error: ${response.statusCode}');
+        throw Exception('HTTP Error: ${response.statusCode}');
       }
     } catch (e) {
-      // Network error or invalid JSON
-      print('Fetch error: $e');
+      throw Exception('Fetch error: $e');
     }
   }
 
@@ -56,67 +51,79 @@ class _QuranInfoCardsPageState extends State<QuranInfoCardsPage> {
           ),
         ),
       ),
-      body:
-          _cards.isEmpty
-              ? const Center(child: CircularProgressIndicator())
-              : Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: GridView.builder(
-                  itemCount: _cards.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 1,
-                  ),
-                  itemBuilder: (context, index) {
-                    final card = _cards[index];
-                    return FlipCard(
-                      direction: FlipDirection.HORIZONTAL,
-                      front: Card(
-                        color: const Color(0xFF2FBAC4),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              card['title'] ?? '',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                      back: Card(
-                        elevation: 10,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              card['content'] ?? '',
-                              style: const TextStyle(
-                                color: Color(0xFF2FBAC4),
-                                fontSize: 16,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: _futureCards,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('حدث خطأ: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('لا توجد معلومات لعرضها'));
+          }
+
+          final cards = snapshot.data!;
+
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: GridView.builder(
+              itemCount: cards.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 1,
               ),
+              itemBuilder: (context, index) {
+                final card = cards[index];
+                return FlipCard(
+                  direction: FlipDirection.HORIZONTAL,
+                  front: Card(
+                    color: const Color(0xFF2FBAC4),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          card['title'] ?? '',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                  back: Card(
+                    elevation: 10,
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          card['content'] ?? '',
+                          style: const TextStyle(
+                            color: Color(0xFF2FBAC4),
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }
