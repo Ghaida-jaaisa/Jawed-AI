@@ -34,7 +34,8 @@ class _QuranicDuaPageState extends State<QuranicDuaPage> {
           ayahNumber: item['ayah']?.toString() ?? '',
         );
       }).toList();
-    } else {
+    }
+    else {
       throw Exception('فشل في جلب البيانات من الخادم');
     }
   }

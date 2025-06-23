@@ -46,16 +46,13 @@ class DuaaKhatmQuranPage extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(16),
               child: SingleChildScrollView(
-                child: Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Text(
-                    snapshot.data ?? '',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      height: 2,
-                      fontFamily: 'Amiri',
-                      color: Color(0xFF333333),
-                    ),
+                child: Text(
+                  snapshot.data ?? '',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    height: 2,
+                    fontFamily: 'Amiri',
+                    color: Color(0xFF333333),
                   ),
                 ),
               ),
